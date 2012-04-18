@@ -16,7 +16,7 @@ class RailsValidatorsGenerator < Rails::Generators::Base
   protected
 
   def available_validators
-    [:email, :email_format, :url_format, :company_name, :person_name, :account_number, :name, :currency]
+    [:email, :email_format, :url_format, :company_name, :person_name, :full_name, :account_number, :currency]
   end
 
   def wanted_validators
@@ -31,6 +31,10 @@ class RailsValidatorsGenerator < Rails::Generators::Base
   def copy_validators
     validators.each do |name|  
       copy_file "#{name}_validator.rb", "app/validators/#{name}_validator.rb"
+    end
+
+    unless (validators & [:person_name, :full_name]).empty?
+      copy_file "validator_name_config.rb", "app/validators/validator_name_config.rb"
     end
   end
 end

@@ -1,4 +1,7 @@
-= rails-validators
+= Rails 3 validators
+
+Currently only using generators to copy validators into your app.
+In the future it should be supplied as a Rails 3 Engine ;)
 
 Provides these validators:
 
@@ -6,50 +9,63 @@ Provides these validators:
 
 * company_name
 * person_name
+* full_name
+* name
+* alpha_name
+* ruby_name
 * email_format (using regexp)
 * email (using mail)
 * url_format 
+* currency_validator
 
 Person name:
 
-class Pet
-  ...
-  validates :nick_name, :presence => true, :length => {:within => 2..12}, :person_name => true
-end
+  class Person
+    ...
+    validates :name, :presence => true, :length => {:within => 2..12}, :person_name => true
+  end
+
+Alpha name:
+
+  class Executer
+    ...
+    validates :method, :alpha_name => true
+  end
 
 Company name:
 
-class Company
-  ...
-  validates :name, :presence => true, :length => {:within => 2..40}, :company_name => true
-end
+  class Company
+    ...
+    validates :name, :length => {:within => 2..40}, :company_name => true
+  end
 
 Email format:
 
-class ContactInfo
-  ...
-  validates :email, :presence => true, :email_format => true
-end
+  class ContactInfo
+    ...
+    validates :email, :presence => true, :email_format => true
+  end
 
 Email:
 
-class ContactInfo
-  ...
-  validates :email, :presence => true, :email => true
-end
+  class ContactInfo
+    ...
+    validates :email, :presence => true, :email => true
+  end
 
-Email:
+Url:
 
-class Profile
-  ...
-  validates :webpage, :presence => true, :url_format => true
-end
+  class Profile
+    ...
+    validates :webpage, :presence => true, :url_format => true
+  end
 
 === Configuration
 
-To finetune the name validators, add a validators.rb initializer file
+To finetune the name validators:
 
-NameValidator.name_length 3..40
+  ValidatorNameConfig.name_length 3..40
+  ValidatorNameConfig.name_expr /[a-z]+/
 
 This will make the name validators test for a name length between 2 and 40 characters! 
 Note: The company_name validator always allows for a single character name, unless overridden explicitly using the :length option.
@@ -60,24 +76,24 @@ Note: The company_name validator always allows for a single character name, unle
 
 Usage:
 
-class Person
-  ...
-  validates_with FullNameValidator 
-end
+  class Person
+    ...
+    validates_with FullNameValidator 
+  end
 
 == Generator
 
 Use the provided Rails generator to copy the validators directly into your Rails app so they are available to your models
 
-$ rails_validators [list of validators]
+  $ rails_validators [list of validators]
 
 Example: Copy all validators (default)
 
-$ rails_validators
+  $ rails_validators
 
 Example: Copy specific validators
 
-$ rails_validators email_format url_format
+  $ rails_validators email_format url_format
 
 == TODO
 
