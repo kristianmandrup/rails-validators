@@ -3,6 +3,14 @@
 Currently only using generators to copy validators into your app.
 In the future it should be supplied as a Rails 3 Engine ;)
 
+== TODO
+
+Encapsulate all the name validators into one validator that takes arguments
+
+validates :name, :name => {:spaces => [:one, :multi], :allow => 'chars', :deny => 'chars', :alpha => [:strict, :euro], :cap => [:word, :none], :numbers => [:allow, :not_first], :connectors => [true, '_-']}
+
+By default no spaces and only alpha a-zA-Z. Numbers can be allowed or allowed only after first letter.
+
 Provides these validators:
 
 == Attribute validators
